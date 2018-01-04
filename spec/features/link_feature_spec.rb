@@ -7,6 +7,6 @@ RSpec.feature "Creating a new link" do
     click_button "Shorten"
     expect(page).to have_content("Your link has been shortened.")
     link = Link.first
-    expect(page).to have_content("Your short link is #{link.long_url}")
+    expect(page).to have_content("Your short link is #{link.short_url}")
   end
 end

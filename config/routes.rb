@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root 'links#index'
 
-  post "/", to: "home#create"
+  post "/", to: "links#create"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
