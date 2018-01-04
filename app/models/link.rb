@@ -1,3 +1,7 @@
 class Link < ApplicationRecord
-  before_save { self.short_url = SecureRandom.urlsafe_base64(6) }
+  validates :long_url, presence: true
+  validates_uniqueness_of  :long_url
+
+  def shorten_url
+  end
 end
