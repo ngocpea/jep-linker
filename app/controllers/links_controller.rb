@@ -1,6 +1,5 @@
 class LinksController < ApplicationController
-  def index
-  end
+  def index() end
 
   def create
     link = Link.find_or_create_by(link_params)
