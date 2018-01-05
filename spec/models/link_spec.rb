@@ -13,6 +13,5 @@ RSpec.describe Link, type: :model do
     link = Link.create(long_url: long_url)
     expect(link).to_not be_valid
     expect(link.errors[:long_url]).to eq(["has already been taken"])
-    # expect { Link.create!(long_url: long_url) }.to raise_error("Validation failed: Long url has already been taken")
   end
 end
