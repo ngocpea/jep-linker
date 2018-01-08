@@ -8,6 +8,8 @@ class LinksController < ApplicationController
       render plain: "Your short link is #{existing_link.short_url}"
     else
       link = Link.new(long_url: params[:long_url])
+      link.valid?
+      return render plain: "please enter your link" if link.errors[:long_url].any?
       link.create_short_url
       until link.save
         link.create_short_url

@@ -24,3 +24,11 @@ RSpec.feature "When entering an entering an existing link" do
     expect(page).to have_content("Your short link is #{link.first.short_url}")
   end
 end
+
+RSpec.feature "When no url is entered" do
+  scenario "returns the fill in link error mesage" do
+    visit '/'
+    click_button "Shorten"
+    expect(page).to have_content("please enter your link")
+  end
+end
