@@ -2,4 +2,14 @@
   <%= label_tag :long_url, "Long URL" %>
   <%= text_field_tag :long_url  %>
   <%= submit_tag "Shorten" %>
+  <br><br>
+  <tbody>
+    <% @links.each do |link| %>
+      <tr>
+      <td><%= "id = #{link.id}" %></td><br>
+        <td><%= "long_url = #{link.long_url}" %></td><br>
+        <td><%= "short_url = #{link.short_url}" %></td><br>
+      </tr><br>
+    <% end %>
+  </tbody>
 <% end %>
