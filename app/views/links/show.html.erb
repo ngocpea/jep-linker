@@ -1,4 +1,5 @@
-<% if flash[:notice] %>
+<% if flash[:notice] && @link %>
   <div class="notice"><%= flash[:notice] %></div>
+  <div><%= @link.short_url %></div>
 <% end %>
-<div><%= @link.short_url %></div>
+

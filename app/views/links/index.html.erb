@@ -3,3 +3,6 @@
   <%= text_field_tag :long_url  %>
   <%= submit_tag "Shorten" %>
 <% end %>
+<% if @error_message %>
+  <div><%= @error_message[:display] %></div>
+<% end %>
