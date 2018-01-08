@@ -1,0 +1,6 @@
+<%= form_for(@link) do |f| %>
+  <%= render 'shared/error_messages' %>
+  <%= f.label :long_url, "Long URL" %>
+  <%= f.text_field :long_url %>
+  <%= f.submit "Shorten" %>
+<% end %>
