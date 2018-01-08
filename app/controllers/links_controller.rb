@@ -1,6 +1,7 @@
 class LinksController < ApplicationController
   include Services
   def index
+    @link = Link.new
   end
 
   def show
@@ -8,14 +9,13 @@ class LinksController < ApplicationController
   end
 
   def create
-    empty = Services::Url.is_empty?(long_url: params[:long_url])
-    if empty
-      render plain: "Please enter your link"
-    else
-      @link = Services::Url.find_or_create(long_url: params[:long_url])
+    @link = Services::Url.find_or_create(long_url: params[:link][:long_url])
+    if @link.valid? 
       @shortened_link = "Your short link is #{@link.short_url}"
       redirect_to link_path(@link) 
       flash[:notice] = "Short link successfully created"
+    else
+      render plain: "Please enter your link"
     end
   end
 end

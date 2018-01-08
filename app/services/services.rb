@@ -7,8 +7,6 @@ module Services
       short_link = "www.linker/#{unique_id.to_s + SecureRandom.base64(6)}" 
       Link.create(long_url: long_url, short_url: short_link)
     end
-    def self.is_empty?(long_url:)
-      long_url.empty?
-    end
+
   end
 end
