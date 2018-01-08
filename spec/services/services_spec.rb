@@ -5,6 +5,7 @@ RSpec.describe Services::Url do
   before(:each) do
     @url_shortener = described_class
   end
+
   describe "Url" do
     context "given a long url" do
       it "provides a shorter URL" do

@@ -12,8 +12,7 @@ class LinksController < ApplicationController
     @link = Services::Url.find_or_create(long_url: params[:link][:long_url])
     if @link.valid? 
       @shortened_link = "Your short link is #{@link.short_url}"
-      redirect_to link_path(@link) 
-      flash[:notice] = "Short link successfully created"
+      redirect_to link_path(@link)
     else
       render plain: "Please enter your link"
     end
