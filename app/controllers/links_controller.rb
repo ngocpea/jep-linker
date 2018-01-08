@@ -16,6 +16,12 @@ class LinksController < ApplicationController
     @link = Link.find(params[:id])
   end
 
+  def forward
+    id = params[:short_url].to_i(36)
+    @link = Link.find(id)
+    redirect_to "http://#{@link.long_url}"
+  end
+
   private
 
   def link_params
