@@ -7,11 +7,12 @@ class LinksController < ApplicationController
 
   def create
     long_url = params[:link][:long_url]
+    user_chosen_short_url = params[:link][:short_url]
     existing_link = Link.where(long_url: long_url).first
     if existing_link
       render plain: "Your short link is #{existing_link.short_url}"
     else
-      render plain: CreateLink.new.create_new_link(long_url)
+      render plain: CreateLink.new.create_new_link(long_url, user_chosen_short_url)
     end
   end
 
