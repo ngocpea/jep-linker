@@ -15,7 +15,7 @@ RSpec.feature "Creating a new link" do
   end
 end
 
-RSpec.feature "When entering an entering an existing link" do
+RSpec.feature "When entering an existing link" do
   scenario "returns the corresponding short url" do
     visit_fill_click_link
     visit_fill_click_link
