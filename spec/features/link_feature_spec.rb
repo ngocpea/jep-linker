@@ -33,3 +33,12 @@ RSpec.feature "When no url is entered" do
     expect(page).to have_content("please enter your link")
   end
 end
+
+RSpec.feature "When user navigates to short url" do
+  scenario "redirects to the long url", js: true do
+    visit_fill_click_link
+    # p Link.first.short_url
+    visit "/#{Link.first.short_url}"
+    expect(page.current_url).to eq("http://ryanbigg.com/2016/04/hiring-juniors")
+  end
+end

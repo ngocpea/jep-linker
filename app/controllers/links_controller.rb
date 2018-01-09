@@ -12,4 +12,10 @@ class LinksController < ApplicationController
       render plain: CreateLink.new.create_new_link(long_url)
     end
   end
+
+  def show
+    short_url = params[:short_url]
+    link = Link.where(short_url: short_url).first
+    redirect_to link.long_url
+  end
 end
