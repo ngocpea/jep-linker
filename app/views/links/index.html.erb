@@ -3,6 +3,16 @@
   <%= f.text_field :long_url  %>
   <%= f.submit "Shorten" %>
 <% end %>
-<% if @error_message %>
-  <div><%= @error_message[:display] %></div>
+
+<% if flash[:notice] %>
+ <div id="notice"><%= flash[:notice] %></div>
 <% end %>
+
+<% if @shortened_link %>
+  Short link successfully created <%= link_to add_domain << @shortened_link.short_url, @shortened_link.long_url %>
+<% end %> 
+
+
+
+
+
