@@ -37,7 +37,16 @@ end
 RSpec.feature "When user navigates to short url" do
   scenario "redirects to the long url", js: true do
     visit_fill_click_link
-    # p Link.first.short_url
+    visit "/#{Link.first.short_url}"
+    expect(page.current_url).to eq("http://ryanbigg.com/2016/04/hiring-juniors")
+  end
+end
+
+RSpec.feature "When user navigates to short url" do
+  scenario "redirects to the long url when long url does not have protocol", js: true do
+    visit "/"
+    fill_in "Long URL", with: "ryanbigg.com/2016/04/hiring-juniors"
+    click_button "Shorten"
     visit "/#{Link.first.short_url}"
     expect(page.current_url).to eq("http://ryanbigg.com/2016/04/hiring-juniors")
   end
