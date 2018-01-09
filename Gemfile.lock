@@ -203,6 +203,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   byebug
   capybara (~> 2.13)
   capybara-selenium

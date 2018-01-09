@@ -1,3 +1,5 @@
+require 'uri/http'
+
 class LinksController < ApplicationController
   def index
     @link = Link.new
@@ -16,6 +18,7 @@ class LinksController < ApplicationController
   def show
     short_url = params[:short_url]
     link = Link.where(short_url: short_url).first
-    redirect_to link.long_url
+    url = Addressable::URI.heuristic_parse(link.long_url)
+    redirect_to url.to_s
   end
 end
