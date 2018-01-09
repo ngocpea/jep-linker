@@ -5,7 +5,7 @@ class LinksController < ApplicationController
   end
 
   def show
-    @link = Link.find(params[:id])
+    @link = Link.find_by_short_url(params[:id])
   end
 
   def create
