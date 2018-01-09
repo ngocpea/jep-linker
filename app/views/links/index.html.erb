@@ -4,10 +4,10 @@
   <%= f.submit "Shorten" %>
 <% end %>
 <% if flash[:notice] %>
-  <%= flash[:notice] %>
+ <div id="notice"><%= flash[:notice] %></div>
 <% end %>
 <% if @shortened_link %>
-  Short link successfully created <%= link_to @shortened_link.short_url, @shortened_link.long_url %>
+  Short link successfully created <%= link_to add_domain << @shortened_link.short_url, @shortened_link.long_url %>
 <% end %> 
 
 
