@@ -10,7 +10,8 @@ class Link < ApplicationRecord
   validates :short_url,
             uniqueness: true,
             length: { maximum: 20, minimum: 1 },
-            allow_blank: true
+            allow_blank: true,
+            format: { without: /\Alinks\z/ }
 
   private
 
