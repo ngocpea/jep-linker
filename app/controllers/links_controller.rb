@@ -18,7 +18,7 @@ class LinksController < ApplicationController
 
   def forward
     @link = Link.find_by(short_url: params[:short_url])
-    redirect_to "http://#{@link.long_url}"
+    redirect_to @link.long_url
   end
 
   private
@@ -30,7 +30,7 @@ class LinksController < ApplicationController
   def find_or_create(link_params)
     long_url = format_long_url(link_params[:long_url])
     link = Link.find_by(long_url: long_url, is_custom_url: false)
-    link || Link.create(link_params)
+    link || Link.create(short_url: link_params[:short_url], long_url: long_url)
   end
 
   def format_long_url(long_url)
