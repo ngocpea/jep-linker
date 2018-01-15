@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Link, type: :model do
-  let(:long_url) { "cultureamp.com" }
+  let(:long_url) { "http://cultureamp.com" }
   let(:custom_url) { "ca" }
 
   before do
@@ -19,20 +19,20 @@ RSpec.describe Link, type: :model do
   end
 
   it "downcases long_url and short_url" do
-    mixed_case = Link.create(long_url: "gOOglE.CoM", short_url: "GoOgle")
-    expect(mixed_case.long_url).to eq("google.com")
+    mixed_case = Link.create(long_url: "http://gOOglE.CoM", short_url: "GoOgle")
+    expect(mixed_case.long_url).to eq("http://google.com")
     expect(mixed_case.short_url).to eq("google")
   end
 
   it "does not create entries with same short_url" do
     Link.create!(long_url: long_url, short_url: custom_url)
-    dup_link = Link.create(long_url: "test.com", short_url: custom_url)
+    dup_link = Link.create(long_url: "http://test.com", short_url: custom_url)
     expect(dup_link).to_not be_valid
     expect(dup_link.errors[:short_url]).to eq(["has already been taken"])
   end
 
   it "does not accept invalid URLs" do
-    skip
     invalid_link = Link.create(long_url: "foobar")
+    expect(invalid_link).to_not be_valid
   end
 end
