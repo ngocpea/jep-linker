@@ -3,6 +3,7 @@ class Link < ApplicationRecord
   before_save { long_url.downcase! }
   before_save { short_url.downcase! }
 
+  validate :not_a_shortening_service
   validates :long_url,
             format: { with: /\A#{URI::regexp(['http', 'https'])}\z/,
                       message: "Invalid URL format" },
@@ -28,6 +29,18 @@ class Link < ApplicationRecord
       self.short_url = short_code
     else
       self.is_custom_url = true
+    end
+  end
+
+  def not_a_shortening_service
+    begin
+      url = URI.parse(long_url)
+    rescue URI::InvalidURIError
+      return false
+    end
+
+    if url.host == "goo.gl" || url.host == "bit.ly"
+      errors.add(:long_url_error, "Shortening service not allowed in long URL")
     end
   end
 end
