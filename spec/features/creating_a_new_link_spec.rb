@@ -14,4 +14,11 @@ RSpec.feature "Creating a new link" do
     click_button "Shorten"
     expect(page).to have_content("Long url can't be blank")
   end
+
+  scenario "shows an error message if long url is invalid" do
+    visit "/"
+    fill_in "Long URL", with: "leftover Christmas ham"
+    click_button "Shorten"
+    expect(page).to have_content("Invalid URL format")
+  end
 end
