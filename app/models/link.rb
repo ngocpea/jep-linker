@@ -1,7 +1,12 @@
 class Link < ApplicationRecord
-  validates :long_url, uniqueness: true, presence: true
+  validates :short_url, uniqueness: true
 
-  def short_url
-    self.short_url = id.to_s(16)
+  def shorten_url
+    self.short_url = id.to_i.to_s(16)
   end
 end
+
+
+
+
+
