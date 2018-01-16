@@ -4,12 +4,9 @@ RSpec.describe Link, type: :model do
   let(:long_url) { "http://cultureamp.com" }
   let(:custom_url) { "ca" }
 
-  before do
-    @cultureamp = Link.create!(long_url: long_url)
-  end
-
   it "generates a short URL if no custom URL" do
-    expect(@cultureamp.short_url).to be_present
+    link = Link.create!(long_url: long_url)
+    expect(link.short_url).to be_present
   end
 
   it "does not allow custom URLs that are longer than 20 chars" do
