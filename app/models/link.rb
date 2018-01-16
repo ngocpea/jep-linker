@@ -1,7 +1,6 @@
 class Link < ApplicationRecord
   before_save :build_short_url, on: :create
   before_save { long_url.downcase! }
-  before_save { short_url.downcase! }
 
   validate :not_a_shortening_service
   validates :long_url,
@@ -23,24 +22,21 @@ class Link < ApplicationRecord
   def build_short_url
     if short_url.blank?
       short_code = generate_short_code
-      while Link.where(short_url: short_code).exists?
-        short_code = generate_short_code
-      end
+      short_code = generate_short_code while Link.where(short_url: short_code).exists?
       self.short_url = short_code
     else
       self.is_custom_url = true
+      short_url.downcase!
     end
   end
 
+  OTHER_SHORTENERS = ["goo.gl", "bit.ly"].freeze
   def not_a_shortening_service
     begin
       url = URI.parse(long_url)
     rescue URI::InvalidURIError
       return false
     end
-
-    if url.host == "goo.gl" || url.host == "bit.ly"
-      errors.add(:long_url_error, "Shortening service not allowed in long URL")
-    end
+    errors.add(:long_url_error, "- shortening service not allowed in long URL") if OTHER_SHORTENERS.include?(url.host)
   end
 end
