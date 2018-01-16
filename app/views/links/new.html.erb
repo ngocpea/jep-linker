@@ -1,5 +1,5 @@
 <%= form_for(@link) do |f| %>
-  <%= render 'shared/error_messages' %>
+  <%= render 'shared/error_messages', errors: @link.errors %>
   <%= f.label :long_url, "Long URL" %>
   <%= f.text_field :long_url %>
   <%= f.label :short_url, "Custom URL" %>
