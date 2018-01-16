@@ -10,11 +10,11 @@ class Link < ApplicationRecord
   end
 
   def user_create_uniq_short_url(short_url)
-    if Link.where(short_url: short_url).exists?
-      "Your short_url already exists. Try again"
-    else
-      self.short_url = short_url
-    end
+    self.short_url = short_url
+  end
+
+  def to_param
+    short_url
   end
 
   private
