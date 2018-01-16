@@ -26,13 +26,13 @@ RSpec.feature "Creating a new link" do
     visit "/"
     fill_in "Long URL", with: "https://goo.gl/5PnQ4y"
     click_button "Shorten"
-    expect(page).to have_content("Shortening service not allowed in long URL")
+    expect(page).to have_content("shortening service not allowed in long URL")
   end
 
   scenario "bit.ly shortening service is not allowed" do
     visit "/"
     fill_in "Long URL", with: "http://bit.ly/2oG0C3v"
     click_button "Shorten"
-    expect(page).to have_content("Shortening service not allowed in long URL")
+    expect(page).to have_content("shortening service not allowed in long URL")
   end
 end
