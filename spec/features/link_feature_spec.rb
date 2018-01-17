@@ -42,3 +42,13 @@ RSpec.feature "When user inputs short url" do
     expect(page).to have_content("Your link is rbjuniors")
   end
 end
+
+RSpec.feature "When user inputs short url" do
+  scenario "they can specify their own short url" do
+    visit "/"
+    fill_in "Long URL", with: "originaryanbigg.com/2016/04/hiring-juniors"
+    fill_in "Unique Short URL", with: "dot.test"
+    click_button "Shorten"
+    expect(page).to have_content("Your link is dot.test")
+  end
+end
