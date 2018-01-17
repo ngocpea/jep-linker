@@ -5,17 +5,18 @@ class LinksController < ApplicationController
   end
 
   def create
-    if params[:link][:long_url].present? && !params[:link][:short_url].present?
-      link = Link.find_or_create_by(long_url: params[:link][:long_url])
-      if link[:short_url].nil?
-        link.shorten_url
-        link.save!
-        render plain: "Your link is CREATED: #{link.short_url}"
-        return
-      else
+    if params[:link][:long_url].present? && params[:link][:short_url].blank?
+      link = Link.find_by(long_url: params[:link][:long_url])
+      if link
         render plain: "Your link ALREADY EXISTS and is #{link.short_url}"
         return
       end
+
+      link = Link.create(long_url: params[:link][:long_url])
+      link.shorten_url
+      link.save!
+      render plain: "Your link is CREATED: #{link.short_url}"
+      return
     end
 
     if params[:link][:long_url].blank? && params[:link][:short_url].blank?
@@ -24,7 +25,7 @@ class LinksController < ApplicationController
     end
 
     if params[:link][:long_url] && params[:link][:short_url]
-      link = Link.find_or_create_by(
+      link = Link.find_by(
         long_url: params[:link][:long_url],
         short_url: params[:link][:short_url],
         )
@@ -43,10 +44,4 @@ class LinksController < ApplicationController
     @link = Link.find_by(short_url: params[:short_url])
     redirect_to "http://#{@link.long_url}"
   end
-
-  # private
-
-  # def link_params
-  #   params.require(:link).permit(:long_url, :short_url)
-  # end
 end

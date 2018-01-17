@@ -1,0 +1,7 @@
+<%= form_for(@link) do |f| %>
+  <%= f.label :long_url, 'Long URL' %>
+  <%= f.text_field :long_url %>
+  <%= f.label :short_url, 'Short URL' %>
+  <%= f.text_field :short_url %>
+  <%= f.submit %>
+<% end %>

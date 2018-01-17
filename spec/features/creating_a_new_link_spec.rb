@@ -35,6 +35,8 @@ RSpec.feature "Creating a new link" do
     fill_in 'Long URL', with: 'www.cultureamp.com'
     click_button "Create Link"
     link = Link.last
+    save_and_open_page
+    expect(page).not_to have_content("Your link is CREATED: 0")
     expect(page).to have_content("Your link is CREATED: #{link.short_url}")
   end
 
