@@ -66,7 +66,5 @@ RSpec.feature "Creating a new link" do
     click_button "Create Link"
     expect(page).to have_content("Your link could not be saved")
     expect(page).to have_content("Short url has already been taken")
-    # link = Link.last
-    # expect(page).to have_content("Short URL needs to be UNIQUE. #{link.short_url} already exists.")
   end
 end

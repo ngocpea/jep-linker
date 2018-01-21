@@ -5,12 +5,12 @@ class LinksController < ApplicationController
   end
 
   def show
+    @link = Link.find(params[:id])
   end
 
   def create
     long_url = params[:link][:long_url]
     short_url = params[:link][:short_url]
-
     if long_url.blank? && short_url.blank?
       render plain: "Failed to save - please enter your link"
       return
