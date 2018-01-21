@@ -4,41 +4,51 @@ class LinksController < ApplicationController
     @link = Link.new
   end
 
+  def show
+  end
+
   def create
-    if params[:link][:long_url].present? && params[:link][:short_url].blank?
-      link = Link.find_by(long_url: params[:link][:long_url])
+    long_url = params[:link][:long_url]
+    short_url = params[:link][:short_url]
+
+    if long_url.blank? && short_url.blank?
+      render plain: "Failed to save - please enter your link"
+      return
+    end
+
+    if short_url.blank?
+      link = Link.find_by(long_url: long_url)
       if link
         render plain: "Your link ALREADY EXISTS and is #{link.short_url}"
         return
       end
 
-      link = Link.create(long_url: params[:link][:long_url])
-      link.shorten_url
-      link.save!
-      render plain: "Your link is CREATED: #{link.short_url}"
-      return
+      @link = Link.new(long_url: long_url)
+      if @link.save
+        @link.shorten_url
+        @link.save!
+        render plain: "Your link is CREATED: #{@link.short_url}"
+        return
+      else
+        flash.now[:alert] = "Your link could not be saved"
+        render :new
+        return
+      end
     end
 
-    if params[:link][:long_url].blank? && params[:link][:short_url].blank?
-      render plain: "Failed to save - please enter your link"
-      return
+    if long_url && short_url
+      @link = Link.new(long_url: long_url, short_url: short_url)
+      if @link.save
+        flash[:notice] = "Your link was saved successfully"
+        redirect_to @link
+      else
+        flash.now[:alert] = "Your link could not be saved"
+        render :new
+      end
     end
-
-    if params[:link][:long_url] && params[:link][:short_url]
-      link = Link.find_by(
-        long_url: params[:link][:long_url],
-        short_url: params[:link][:short_url],
-        )
-        if link.valid?
-          render plain: "Your CUSTOM link is created: #{link.short_url}"
-          return
-        else
-          render plain: "Short URL needs to be UNIQUE. #{link.short_url} already exists."
-          return
-        end
-    end
-
   end
+
+  private
 
   def redirect
     @link = Link.find_by(short_url: params[:short_url])

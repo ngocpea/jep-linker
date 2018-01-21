@@ -30,12 +30,20 @@ RSpec.feature "Creating a new link" do
     expect(page).to have_content("Failed to save - please enter your link")
   end
 
+  scenario "returns a short link if it already exists" do
+    long_url = "www.juliehuang.co.nz"
+    link = Link.create(short_url: "jules", long_url: long_url)
+    visit "/"
+    fill_in 'Long URL', with: long_url
+    click_button "Create Link"
+    expect(page).to have_content("Your link ALREADY EXISTS and is #{link.short_url}")
+  end
+
   scenario "automatically generates short URL from long URL" do
     visit "/"
     fill_in 'Long URL', with: 'www.cultureamp.com'
     click_button "Create Link"
     link = Link.last
-    save_and_open_page
     expect(page).not_to have_content("Your link is CREATED: 0")
     expect(page).to have_content("Your link is CREATED: #{link.short_url}")
   end
@@ -50,15 +58,15 @@ RSpec.feature "Creating a new link" do
   end
 
   scenario "persists only unique short urls" do
-    visit "/"
-    fill_in 'Long URL', with: 'www.cultureamp.com'
-    fill_in 'Short URL', with: 'abc123'
-    click_button "Create Link"
+    short_url = "abc123"
+    link = Link.create(short_url: short_url )
     visit "/"
     fill_in 'Long URL', with: 'www.anotherwebsite.com'
-    fill_in 'Short URL', with: 'abc123'
+    fill_in 'Short URL', with: short_url
     click_button "Create Link"
-    link = Link.last
-    expect(page).to have_content("Short URL needs to be UNIQUE. #{link.short_url} already exists.")
+    expect(page).to have_content("Your link could not be saved")
+    expect(page).to have_content("Short url has already been taken")
+    # link = Link.last
+    # expect(page).to have_content("Short URL needs to be UNIQUE. #{link.short_url} already exists.")
   end
 end
