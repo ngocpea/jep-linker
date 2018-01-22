@@ -67,4 +67,10 @@ RSpec.feature "Creating a new link" do
     expect(page).to have_content("Your link could not be saved")
     expect(page).to have_content("Short url has already been taken")
   end
+
+  scenario "user is redirected to external site", js: true do
+    link = Link.create(long_url: "www.juliehuang.co.nz", short_url: "jules")
+    visit "http://localhost:3000/#{link.short_url}"
+    expect(page).to have_current_path(Addressable::URI.heuristic_parse(link.long_url).to_s)
+  end
 end
