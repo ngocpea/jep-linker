@@ -1,5 +1,5 @@
 class Link < ApplicationRecord
-  validates :long_url, presence: true
+  validates :long_url, presence: true, url: true
   validates :short_url, uniqueness: true
 
   def create_uniq_short_url

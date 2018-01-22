@@ -6,12 +6,10 @@ class LinksController < ApplicationController
   end
 
   def create
-    # binding.pry
     long_url = params[:link][:long_url]
     user_chosen_short_url = params[:link][:short_url]
     @link = CreateLink.short_link_from_existing_link(long_url, user_chosen_short_url)
     if @link.save
-      # binding.pry
       flash.now[:notice] = "Your link was shortened to: #{@link.short_url}"
       redirect_to action: "show", id: @link.id # why not @link??
     else
@@ -26,8 +24,7 @@ class LinksController < ApplicationController
 
   def forward
     short_url = params[:short_url]
-    link = Link.where(short_url: short_url).first
-    url = Addressable::URI.heuristic_parse(link.long_url)
-    redirect_to url.to_s
+    link = Link.find_by(short_url: short_url)
+    redirect_to link.long_url.to_s
   end
 end
