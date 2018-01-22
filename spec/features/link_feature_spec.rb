@@ -52,3 +52,12 @@ RSpec.feature "When user inputs short url" do
     expect(page).to have_content("Your link is dot.test")
   end
 end
+
+RSpec.feature "When user inputs invalid long url" do
+  scenario "they can specify their own short url" do
+    visit "/"
+    fill_in "Long URL", with: "some junk"
+    click_button "Shorten"
+    expect(page).to have_content("Long url is not a valid URL")
+  end
+end
