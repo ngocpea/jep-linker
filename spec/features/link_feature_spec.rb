@@ -61,3 +61,22 @@ RSpec.feature "When user inputs invalid long url" do
     expect(page).to have_content("Long url is not a valid URL")
   end
 end
+
+RSpec.feature "When user inputs another short-link service link inot long-url" do
+  scenario "they get an error message" do
+    visit '/'
+    fill_in "Long URL", with: "http://bit.ly/2oG0C3v"
+    click_button "Shorten"
+    expect(page).to have_content("is already a shortened URL")
+  end
+end
+
+RSpec.feature "When user inputs another short-link service link into short-url" do
+  scenario "they get an error message" do
+    visit '/'
+    fill_in "Long URL", with: "cultureamp.com"
+    fill_in "Short URL", with: "https://goo.gl/5PnQ4y"
+    click_button "Shorten"
+    expect(page).to have_content("is already a shortened URL")
+  end
+end
